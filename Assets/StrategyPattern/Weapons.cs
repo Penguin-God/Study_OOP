@@ -1,18 +1,23 @@
 using UnityEngine;
+using System.Collections;
 
 abstract public class Weapons : MonoBehaviour
 {
-    [SerializeField] Shooter shooter = null;
-
-    public string weaponName;
-    public float attackDelayTime ;
+    public float attackDelayTime;
     public bool attackAble = true;
     public int damage;
 
     public abstract void Attack();
 
-    private void OnEnable()
+    public IEnumerator Co_WeaponCollDown()
     {
-        shooter.SetWeapon(this);
+        attackAble = false;
+        yield return new WaitForSeconds(attackDelayTime);
+        attackAble = true;
+    }
+
+    private void OnDisable()
+    {
+        attackAble = true;
     }
 }

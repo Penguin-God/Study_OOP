@@ -9,27 +9,15 @@ public class Shooter : MonoBehaviour
 
     public int currentAmmo;
     public int maxAmmo;
-    public int currentCoin;
-    public int maxCoin;
-    public int currentPlayerHp;
-    public int maxPlayerHp;
     public int currentGrenade;
     public int maxGrenade;
-    public int score;
 
-    public int EquipObjcetIndex = -1; 
-
-    
-    public bool isJump; 
     bool isDodje; 
-    bool isReload; 
-    public bool isMelee; 
+    bool isReload;
 
-    
     private float hAxis;
     private float xAxis;
     bool JumpKey;
-    bool GetItemKey;
     bool SwapWeapon1;
     bool SwapWeapon3;
     bool SwapWeapon2;
@@ -40,28 +28,23 @@ public class Shooter : MonoBehaviour
     Vector3 DodgeVector;
 
     Animator animator;
-    Dictionary<string, GameObject> weaponDictionary = new Dictionary<string, GameObject>();
-    [SerializeField] GameObject Hammer;
-    [SerializeField] GameObject Gun1;
-    [SerializeField] GameObject Gun2;
 
+    Dictionary<Weapons, string> Dic_WeaponAnitionName = new Dictionary<Weapons, string>();
     private void Awake()
     {
-        weaponDictionary.Add("Hammer", Hammer);
-        weaponDictionary.Add("HandGun", Gun1);
-        weaponDictionary.Add("SubMachineGun", Gun2);
-
+        Dic_WeaponAnitionName.Add(Hammer, "DoSwing");
+        Dic_WeaponAnitionName.Add(Gun1, "DoShot");
+        Dic_WeaponAnitionName.Add(Gun2, "DoMachineGunShot");
         animator = GetComponentInChildren<Animator>(); 
     }
 
     void Update()
     {
+        SwapWeapon();
         GetInput();
         Dodge();
         PlayerMove();
         PlayerTurn();
-        Jump();
-        ActiveWeapon();
         Attack();
     }
 
@@ -75,53 +58,63 @@ public class Shooter : MonoBehaviour
         SwapWeapon2 = Input.GetButtonDown("ActiveGun1");
         SwapWeapon3 = Input.GetButtonDown("ActiveGun2");
 
-        //AttackDown = Input.GetButton("Fire1"); 
-        //GrenadeDown = Input.GetButtonDown("Fire2");
-        //ReloadDown = Input.GetButtonDown("Reload"); 
+        AttackDown = Input.GetMouseButton(0);
     }
 
+    [SerializeField] Weapons Hammer;
+    [SerializeField] Weapons Gun1;
+    [SerializeField] Weapons Gun2;
     public Weapons currentWeapon = null;
-
-    void ActiveWeapon()
+    Weapons GetSwapWeapons()
     {
-        if (SwapWeapon1) this.Hammer.SetActive(true);
-        else if (SwapWeapon2) this.Gun1.SetActive(true);
-        else if (SwapWeapon3) this.Gun2.SetActive(true);
+        if (SwapWeapon1) return Hammer;
+        else if (SwapWeapon2) return Gun1;
+        else if (SwapWeapon3) return Gun2;
+        else return null;
     }
 
-    public void SetWeapon(Weapons weapon)
+    void SwapWeapon()
     {
-        currentWeapon = weapon;
+        if( (SwapWeapon1 || SwapWeapon2 || SwapWeapon3) && GetSwapWeapons() != currentWeapon )
+        {
+            if(currentWeapon != null) currentWeapon.gameObject.SetActive(false);
+            PutWeaponOn();
+        }
+    }
+
+    // 무기 바꾸기
+    void PutWeaponOn()
+    {
+        currentWeapon = GetSwapWeapons();
+        currentWeapon.gameObject.SetActive(true);
     }
 
     void Attack()
     {
-        if(Input.GetMouseButton(0) && currentWeapon != null && currentWeapon.attackAble)
+        if(AttackDown && currentWeapon != null && currentWeapon.attackAble)
         {
+            animator.SetTrigger(Dic_WeaponAnitionName[currentWeapon]);
             currentWeapon.Attack();
         }
     }
 
     void PlayerMove() 
     {
-        if (isDodje) 
-            MoveVec = DodgeVector;
-        else
-            MoveVec = new Vector3(xAxis, 0, hAxis).normalized; 
+        if (isDodje) MoveVec = DodgeVector;
+        else MoveVec = new Vector3(xAxis, 0, hAxis).normalized; 
 
-        if (AttackDown && !isJump && !isDodje) 
-            MoveVec = Vector3.zero;
+        if (AttackDown && !isDodje) MoveVec = Vector3.zero;
 
         transform.position += MoveVec * speed * Time.deltaTime;
 
-        //animator.SetBool("IsRun", MoveVec != Vector3.zero); 
+        animator.SetBool("IsRun", MoveVec != Vector3.zero); 
     }
 
     void PlayerTurn() 
     {
         transform.LookAt(transform.position + MoveVec); 
 
-        if (AttackDown && !isDodje && !isJump && !isMelee )
+        if (AttackDown && !isDodje)
         {
             Ray CameraRay = followCamera.ScreenPointToRay(Input.mousePosition); 
             RaycastHit rayHit;
@@ -136,7 +129,7 @@ public class Shooter : MonoBehaviour
 
     void Dodge() 
     {
-        if (JumpKey && !isJump && !isDodje && MoveVec != Vector3.zero && !isReload ) 
+        if (JumpKey && !isDodje && MoveVec != Vector3.zero && !isReload ) 
         {
             DodgeVector = MoveVec;
             speed *= 2;
@@ -151,26 +144,5 @@ public class Shooter : MonoBehaviour
     {
         isDodje = false;
         speed *= 0.5f;
-    }
-
-    void Jump()
-    {
-        if (JumpKey && !isJump && MoveVec == Vector3.zero) 
-        {
-            
-            GetComponent<Rigidbody>().AddForce(Vector3.up * 13, ForceMode.Impulse); 
-            isJump = true;
-            animator.SetBool("IsJump", isJump);
-            animator.SetTrigger("DoJump"); 
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision) 
-    {
-        if (collision.gameObject.CompareTag("�ٴ�"))
-        {
-            isJump = false;
-            animator.SetBool("IsJump", isJump);
-        }
     }
 }

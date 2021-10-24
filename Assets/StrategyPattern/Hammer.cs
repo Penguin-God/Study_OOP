@@ -6,6 +6,7 @@ public class Hammer : Weapons
 {
     public override void Attack()
     {
-        Debug.Log("∏¡ƒ° ∆‹∆‹");
+        StartCoroutine(Co_WeaponCollDown());
+        Debug.Log("ÎßùÏπò ÌçΩÌçΩ");
     }
 }
