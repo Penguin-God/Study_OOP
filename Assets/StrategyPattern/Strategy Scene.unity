@@ -216,6 +216,7 @@ MonoBehaviour:
   attackDelayTime: 0.15
   attackAble: 1
   damage: 0
+  animationName: DoMachineGunShot
   bullet: {fileID: 5437235892619904403, guid: 084ae3defc26779438363ba6c8797307, type: 3}
   tf_BulletSpawn: {fileID: 1037614991}
   bulletCase: {fileID: 8019862414519829217, guid: dbf1e72266b94cc4c913b3b6216363d0, type: 3}
@@ -402,6 +403,7 @@ MonoBehaviour:
   attackDelayTime: 0.4
   attackAble: 1
   damage: 0
+  animationName: DoShot
   bullet: {fileID: 967371288247125719, guid: 8c2acae21e5468e47adfe5b2384b3a5b, type: 3}
   tf_BulletSpawn: {fileID: 1037614991}
   bulletCase: {fileID: 8019862414519829217, guid: dbf1e72266b94cc4c913b3b6216363d0, type: 3}
@@ -885,6 +887,7 @@ MonoBehaviour:
   attackDelayTime: 0.8
   attackAble: 1
   damage: 0
+  animationName: DoSwing
 --- !u!1 &1494755628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3403024553794750845, guid: 8f5e135a19626f544908fc8f156144b9, type: 3}

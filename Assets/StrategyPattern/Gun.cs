@@ -6,6 +6,7 @@ public class Gun : Weapons
 {
     public override void Attack()
     {
+        AttackAnimation();
         StartCoroutine(Co_Shot());
         StartCoroutine(Co_WeaponCollDown());
     }

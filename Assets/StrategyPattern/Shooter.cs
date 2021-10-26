@@ -29,12 +29,13 @@ public class Shooter : MonoBehaviour
 
     Animator animator;
 
-    Dictionary<Weapons, string> Dic_WeaponAnitionName = new Dictionary<Weapons, string>();
+    public void DoAttackAnimation(string animationName)
+    {
+        animator.SetTrigger(animationName);
+    }
+
     private void Awake()
     {
-        Dic_WeaponAnitionName.Add(Hammer, "DoSwing");
-        Dic_WeaponAnitionName.Add(Gun1, "DoShot");
-        Dic_WeaponAnitionName.Add(Gun2, "DoMachineGunShot");
         animator = GetComponentInChildren<Animator>(); 
     }
 
@@ -64,7 +65,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] Weapons Hammer;
     [SerializeField] Weapons Gun1;
     [SerializeField] Weapons Gun2;
-    public Weapons currentWeapon = null;
+
+    [SerializeField] Weapons currentWeapon = null;
     Weapons GetSwapWeapons()
     {
         if (SwapWeapon1) return Hammer;
@@ -93,7 +95,6 @@ public class Shooter : MonoBehaviour
     {
         if(AttackDown && currentWeapon != null && currentWeapon.attackAble)
         {
-            animator.SetTrigger(Dic_WeaponAnitionName[currentWeapon]);
             currentWeapon.Attack();
         }
     }
