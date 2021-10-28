@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooter : MonoBehaviour
@@ -7,13 +5,10 @@ public class Shooter : MonoBehaviour
     public float speed;
     public Camera followCamera;
 
-    public int currentAmmo;
-    public int maxAmmo;
     public int currentGrenade;
     public int maxGrenade;
 
-    bool isDodje; 
-    bool isReload;
+    bool isDodje;
 
     private float hAxis;
     private float xAxis;
@@ -22,7 +17,7 @@ public class Shooter : MonoBehaviour
     bool SwapWeapon3;
     bool SwapWeapon2;
     bool AttackDown;
-    bool ReloadDown;
+    bool GetWeaponKey;
 
     Vector3 MoveVec;
     Vector3 DodgeVector;
@@ -58,20 +53,23 @@ public class Shooter : MonoBehaviour
         SwapWeapon1 = Input.GetButtonDown("ActiveHammer");
         SwapWeapon2 = Input.GetButtonDown("ActiveGun1");
         SwapWeapon3 = Input.GetButtonDown("ActiveGun2");
+        GetWeaponKey = Input.GetButtonDown("GetWeapon");
 
         AttackDown = Input.GetMouseButton(0);
     }
 
-    [SerializeField] Weapons Hammer;
-    [SerializeField] Weapons Gun1;
-    [SerializeField] Weapons Gun2;
+    // 주워서 칸으로 사용하기
+    [SerializeField] Weapons[] arr_Item_Inventory = new Weapons[3];
+    //[SerializeField] Weapons Item_1;
+    //[SerializeField] Weapons Item_2;
+    //[SerializeField] Weapons Item_3;
 
     [SerializeField] Weapons currentWeapon = null;
     Weapons GetSwapWeapons()
     {
-        if (SwapWeapon1) return Hammer;
-        else if (SwapWeapon2) return Gun1;
-        else if (SwapWeapon3) return Gun2;
+        if (SwapWeapon1) return arr_Item_Inventory[0];
+        else if (SwapWeapon2) return arr_Item_Inventory[1];
+        else if (SwapWeapon3) return arr_Item_Inventory[2];
         else return null;
     }
 
@@ -87,6 +85,7 @@ public class Shooter : MonoBehaviour
     // 무기 바꾸기
     void PutWeaponOn()
     {
+        animator.SetTrigger("DoSwap");
         currentWeapon = GetSwapWeapons();
         currentWeapon.gameObject.SetActive(true);
     }
@@ -130,7 +129,7 @@ public class Shooter : MonoBehaviour
 
     void Dodge() 
     {
-        if (JumpKey && !isDodje && MoveVec != Vector3.zero && !isReload ) 
+        if (JumpKey && !isDodje && MoveVec != Vector3.zero) 
         {
             DodgeVector = MoveVec;
             speed *= 2;
@@ -145,5 +144,11 @@ public class Shooter : MonoBehaviour
     {
         isDodje = false;
         speed *= 0.5f;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        Field_Weapon contactWeapon = other.GetComponent<Field_Weapon>();
+        if (contactWeapon != null && GetWeaponKey) contactWeapon.Get_Weapon(ref arr_Item_Inventory);
     }
 }

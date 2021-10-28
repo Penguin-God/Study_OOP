@@ -6,9 +6,8 @@ public class Gun : Weapons
 {
     public override void Attack()
     {
-        AttackAnimation();
+        base.BaseAttack();
         StartCoroutine(Co_Shot());
-        StartCoroutine(Co_WeaponCollDown());
     }
 
     IEnumerator Co_Shot()

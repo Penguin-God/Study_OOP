@@ -6,8 +6,7 @@ public class Hammer : Weapons
 {
     public override void Attack()
     {
-        StartCoroutine(Co_WeaponCollDown());
-        AttackAnimation();
+        base.BaseAttack();
         Debug.Log("망치 퍽퍽");
     }
 }

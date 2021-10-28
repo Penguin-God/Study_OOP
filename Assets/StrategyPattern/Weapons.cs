@@ -14,8 +14,14 @@ abstract public class Weapons : MonoBehaviour
     public bool attackAble = true;
     public int damage;
 
-    // 이거 이름 바꾸고 애니메이션 등 공통적인 부분을 다루는 새로운 Attack 함수 만들고 그거 사용하기 확장하기
     public abstract void Attack();
+
+    // 어택 기본
+    public void BaseAttack()
+    {
+        AttackAnimation();
+        StartCoroutine(Co_WeaponCollDown());
+    }
 
     [SerializeField] string animationName = "";
     public void AttackAnimation()
