@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponType
+{
+    Melee,
+    Gun,
+}
+
 public class Field_Weapon : MonoBehaviour
 {
     [SerializeField] string weaponName;
-    public void Get_Weapon(ref Weapons[] weapons)
+    public WeaponType weaponType;
+
+    public void Get_Weapon(ref Weapons weapons)
     {
-        for (int i = 0; i < weapons.Length; i++)
-        {
-            if (weapons[i] == null)
-            {
-                weapons[i] = WeaponManager.WeaponDictionary[weaponName];
-                break;
-            }
-        }
+        weapons = WeaponManager.WeaponDictionary[weaponName];
         gameObject.SetActive(false);
     }
 }

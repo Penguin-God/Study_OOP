@@ -14,7 +14,6 @@ public class Shooter : MonoBehaviour
     private float xAxis;
     bool JumpKey;
     bool SwapWeapon1;
-    bool SwapWeapon3;
     bool SwapWeapon2;
     bool AttackDown;
     bool GetWeaponKey;
@@ -52,46 +51,52 @@ public class Shooter : MonoBehaviour
 
         SwapWeapon1 = Input.GetButtonDown("ActiveHammer");
         SwapWeapon2 = Input.GetButtonDown("ActiveGun1");
-        SwapWeapon3 = Input.GetButtonDown("ActiveGun2");
+
         GetWeaponKey = Input.GetButtonDown("GetWeapon");
 
         AttackDown = Input.GetMouseButton(0);
     }
 
-    // 주워서 칸으로 사용하기
-    [SerializeField] Weapons[] arr_Item_Inventory = new Weapons[3];
-    //[SerializeField] Weapons Item_1;
-    //[SerializeField] Weapons Item_2;
-    //[SerializeField] Weapons Item_3;
+    [SerializeField] Weapons weapon_Gun = null; // 총 인벤토리
+    [SerializeField] Weapons weapon_Melee = null; // 근접무기 인벤토리
 
-    [SerializeField] Weapons currentWeapon = null;
-    Weapons GetSwapWeapons()
+    // 키입력에 따라 무기를 바꿀 인벤토리의 정보를 반환하는 함수
+    Weapons GetSwapInventory()
     {
-        if (SwapWeapon1) return arr_Item_Inventory[0];
-        else if (SwapWeapon2) return arr_Item_Inventory[1];
-        else if (SwapWeapon3) return arr_Item_Inventory[2];
+        if (SwapWeapon1) return weapon_Gun;
+        else if (SwapWeapon2) return weapon_Melee;
         else return null;
     }
 
+    // 현재 착용 무기
+    [SerializeField] Weapons currentWeapon = null;
+    // 현재 착용 무기 변경 및 착용 
     void SwapWeapon()
     {
-        if( (SwapWeapon1 || SwapWeapon2 || SwapWeapon3) && GetSwapWeapons() != currentWeapon )
-        {
-            if(currentWeapon != null) currentWeapon.gameObject.SetActive(false);
+        // 키입력을 받았으며 인벤토리에 무기가 있다면
+        if( (SwapWeapon1 || SwapWeapon2) && GetSwapInventory() != currentWeapon )
+        { 
             PutWeaponOn();
         }
     }
-
-    // 무기 바꾸기
+    // 무기 착용
     void PutWeaponOn()
     {
+        // 애니메이션 실행
         animator.SetTrigger("DoSwap");
-        currentWeapon = GetSwapWeapons();
+
+        // 현재 착용중인 무기가 있으면 무기 숨기기
+        if (currentWeapon != null) currentWeapon.gameObject.SetActive(false);
+        // 현재 착용 중인 무기 변경
+        currentWeapon = GetSwapInventory();
+        // 착용 무기 보여주기
         currentWeapon.gameObject.SetActive(true);
     }
 
+    // 공격
     void Attack()
     {
+        // 공격 키입력을 받았으며 무기를 착용중이면
         if(AttackDown && currentWeapon != null && currentWeapon.attackAble)
         {
             currentWeapon.Attack();
@@ -149,6 +154,15 @@ public class Shooter : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Field_Weapon contactWeapon = other.GetComponent<Field_Weapon>();
-        if (contactWeapon != null && GetWeaponKey) contactWeapon.Get_Weapon(ref arr_Item_Inventory);
+        if (contactWeapon != null && GetWeaponKey) GetWeapon_ToInventory(contactWeapon);
+    }
+
+    void GetWeapon_ToInventory(Field_Weapon field_Weapon)
+    {
+        switch (field_Weapon.weaponType)
+        {
+            case WeaponType.Gun: field_Weapon.Get_Weapon(ref weapon_Gun); break;
+            case WeaponType.Melee: field_Weapon.Get_Weapon(ref weapon_Melee); break;
+        }
     }
 }

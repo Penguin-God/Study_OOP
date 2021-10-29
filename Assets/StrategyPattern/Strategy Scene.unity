@@ -304,10 +304,8 @@ MonoBehaviour:
   followCamera: {fileID: 963194227}
   currentGrenade: 0
   maxGrenade: 0
-  arr_Item_Inventory:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  weapon_Gun: {fileID: 0}
+  weapon_Melee: {fileID: 0}
   currentWeapon: {fileID: 0}
 --- !u!136 &273166331
 CapsuleCollider:
@@ -858,6 +856,10 @@ PrefabInstance:
       propertyPath: weaponName
       value: SubMachineGun
       objectReference: {fileID: 0}
+    - target: {fileID: 3891561313976262441, guid: 3d3cd22395fdc66459634b528404974c, type: 3}
+      propertyPath: weaponType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3970112031607529661, guid: 3d3cd22395fdc66459634b528404974c, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1076,6 +1078,10 @@ PrefabInstance:
       propertyPath: weaponName
       value: Hammer
       objectReference: {fileID: 0}
+    - target: {fileID: 307250352038420310, guid: 0ed5db21f21b8af4f895b4699e8ceb70, type: 3}
+      propertyPath: weaponType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 307250352038420311, guid: 0ed5db21f21b8af4f895b4699e8ceb70, type: 3}
       propertyPath: m_Name
       value: Weapon Hammer
@@ -1188,6 +1194,10 @@ PrefabInstance:
     - target: {fileID: 2129268516026672267, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
       propertyPath: weaponName
       value: HandGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129268516026672267, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
+      propertyPath: weaponType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
