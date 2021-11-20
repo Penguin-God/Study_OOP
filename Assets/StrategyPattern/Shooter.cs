@@ -161,8 +161,8 @@ public class Shooter : MonoBehaviour
     {
         switch (field_Weapon.weaponType)
         {
-            case WeaponType.Gun: field_Weapon.Get_Weapon(ref weapon_Gun); break;
-            case WeaponType.Melee: field_Weapon.Get_Weapon(ref weapon_Melee); break;
+            case WeaponType.Gun: field_Weapon.Get_Weapon(ref weapon_Gun, ref currentWeapon); break;
+            case WeaponType.Melee: field_Weapon.Get_Weapon(ref weapon_Melee, ref currentWeapon); break;
         }
     }
 }

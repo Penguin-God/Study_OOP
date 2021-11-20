@@ -490,6 +490,13 @@ MonoBehaviour:
     weapons: {fileID: 328389054}
   - weaponName: SubMachineGun
     weapons: {fileID: 34637321}
+  arr_FiledWeaponStruct:
+  - weaponScript: {fileID: 1462392524}
+    FiledWeapon: {fileID: 307250352038420311, guid: 0ed5db21f21b8af4f895b4699e8ceb70, type: 3}
+  - weaponScript: {fileID: 328389054}
+    FiledWeapon: {fileID: 2129268516026672266, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
+  - weaponScript: {fileID: 34637321}
+    FiledWeapon: {fileID: 3891561313976262440, guid: 3d3cd22395fdc66459634b528404974c, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,18 +859,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon SubMachineGun
       objectReference: {fileID: 0}
-    - target: {fileID: 3891561313976262441, guid: 3d3cd22395fdc66459634b528404974c, type: 3}
-      propertyPath: weaponName
-      value: SubMachineGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 3891561313976262441, guid: 3d3cd22395fdc66459634b528404974c, type: 3}
-      propertyPath: weaponType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3970112031607529661, guid: 3d3cd22395fdc66459634b528404974c, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4416424612133684626, guid: 3d3cd22395fdc66459634b528404974c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1070,18 +1065,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -2475504461340938169, guid: 0ed5db21f21b8af4f895b4699e8ceb70, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 307250352038420310, guid: 0ed5db21f21b8af4f895b4699e8ceb70, type: 3}
-      propertyPath: weaponName
-      value: Hammer
-      objectReference: {fileID: 0}
-    - target: {fileID: 307250352038420310, guid: 0ed5db21f21b8af4f895b4699e8ceb70, type: 3}
-      propertyPath: weaponType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 307250352038420311, guid: 0ed5db21f21b8af4f895b4699e8ceb70, type: 3}
       propertyPath: m_Name
       value: Weapon Hammer
@@ -1183,21 +1166,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1862525197614041255, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2129268516026672266, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
       propertyPath: m_Name
       value: Weapon HandGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129268516026672267, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
-      propertyPath: weaponName
-      value: HandGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 2129268516026672267, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
-      propertyPath: weaponType
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b738459e3f82d9b4a80a1333933675c1, type: 3}
