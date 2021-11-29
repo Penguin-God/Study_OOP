@@ -1027,7 +1027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDelayTime: 0.8
   attackAble: 1
-  damage: 0
+  damage: 120
   animationName: DoSwing
 --- !u!1 &1494755628 stripped
 GameObject:
